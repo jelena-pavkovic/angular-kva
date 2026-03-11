@@ -1,21 +1,19 @@
-<div class="container">
-    <h1>Digitalna prodavnica igračaka</h1>
+<mat-toolbar color="primary">
+    <span><strong>ToyStore KVA2026</strong></span>
+    <span class="spacer"></span>
 
-    <div class="toy-grid">
-        <div *ngFor="let igracka of (igracke$ | async)" class="toy-card">
-            <img [src]="igracka.imageUrl" [alt]="igracka.name" style="width: 100%; height: 200px; object-fit: cover;">
-            
-            <h2>{{ igracka.name }}</h2>
-            <p><strong>Opis:</strong> {{ igracka.description }}</p>
-            
-            <ul>
-                <li><strong>Tip:</strong> {{ igracka.type?.name }}</li>
-                <li><strong>Uzrast:</strong> {{ igracka.ageGroup?.name }}</li>
-                <li><strong>Ciljna grupa:</strong> {{ igracka.targetGroup }}</li>
-                <li><strong>Cena:</strong> {{ igracka.price }} RSD</li>
-            </ul>
-            
-            <button>Rezerviši</button>
-        </div>
-    </div>
+    <a routerLink="/" mat-button>Početna</a>
+
+    @if(authService.getActiveUser()) {
+        <a routerLink="/cart" mat-button>
+        <mat-icon>shopping_cart</mat-icon> Korpa
+        </a>
+        <button mat-button (click)="authService.doLogout()">Odjavi se</button>
+    } @else {
+        <a routerLink="/login" mat-button>Prijava</a>
+        <a routerLink="/register" mat-button>Registracija</a>
+    }
+</mat-toolbar>
+    <div class="wrapper">
+    <router-outlet />
 </div>
