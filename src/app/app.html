@@ -1,3 +1,21 @@
-<h1>Hello, {{ title() }}</h1>
-<p>Ja sam {{ime}} {{prezime}} i imam broj indeksa {{indeks}}</p>
-<router-outlet />
+<div class="container">
+    <h1>Digitalna prodavnica igračaka</h1>
+
+    <div class="toy-grid">
+        <div *ngFor="let igracka of (igracke$ | async)" class="toy-card">
+            <img [src]="igracka.imageUrl" [alt]="igracka.name" style="width: 100%; height: 200px; object-fit: cover;">
+            
+            <h2>{{ igracka.name }}</h2>
+            <p><strong>Opis:</strong> {{ igracka.description }}</p>
+            
+            <ul>
+                <li><strong>Tip:</strong> {{ igracka.type?.name }}</li>
+                <li><strong>Uzrast:</strong> {{ igracka.ageGroup?.name }}</li>
+                <li><strong>Ciljna grupa:</strong> {{ igracka.targetGroup }}</li>
+                <li><strong>Cena:</strong> {{ igracka.price }} RSD</li>
+            </ul>
+            
+            <button>Rezerviši</button>
+        </div>
+    </div>
+</div>
