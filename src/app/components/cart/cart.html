@@ -1,1 +1,64 @@
-<p>cart works!</p>
+<h1>Moja Korpa Rezervacija</h1>
+
+@if (items.length > 0) {
+<table class="cart-table">
+    <thead>
+        <tr>
+            <th colspan="2">Igračka</th>
+            <th>Cena</th>
+            <th>Kolicina</th>
+            <th>Status</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of items; track $index) {
+        <tr>
+            <td><img [src]="'https://toy.pequla.com' + item.toy.imageUrl" [alt]="item.toy.name" style="width: 50px;">
+            </td>
+            <td>{{ item.toy.name }}</td>
+            <td>{{ item.toy.price }} RSD</td>
+
+            <td>
+                <input type="number" class="quantity-input" [ngModel]="item.quantity"
+                    (ngModelChange)="changeQuantity($index, $event)" [disabled]="item.status !== 'rezervisano'" min="1">
+            </td>
+
+            <td>
+                <mat-form-field appearance="outline">
+                    <mat-select [ngModel]="item.status" (ngModelChange)="changeStatus($index, $event)"
+                        [disabled]="item.status !== 'rezervisano'">
+                        <mat-option value="rezervisano">Rezervisano</mat-option>
+                        <mat-option value="pristiglo">Pristiglo</mat-option>
+                        <mat-option value="otkazano">Otkazano</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <div style="display: flex; gap: 8px;">
+                    @if (item.status === 'pristiglo') {
+                    <button mat-flat-button color="primary" [routerLink]="['/toy', item.toy.toyId]">
+                        OCENI
+                    </button>
+                    }
+
+                    <button mat-icon-button color="warn"
+                        [disabled]="item.status !== 'pristiglo' && item.status !== 'otkazano'" (click)="remove($index)">
+                        Obriši
+                    </button>
+                </div>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="total-section">
+    <h3 class="total-price">Ukupno za uplatu: {{ totalPrice }} RSD</h3>
+</div>
+} @else {
+<div class="empty-cart-container">
+    <h3>Vaša korpa je prazna</h3>
+    <p>Trenutno nemate rezervisanih igračaka. Posetite početnu stranicu i izaberite nešto za sebe.</p>
+    <button routerLink="/" mat-raised-button color="primary">Povratak u prodavnicu</button>
+</div>
+}
