@@ -8,7 +8,7 @@ import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // Proveri da li stoji ovo
+  standalone: true,
   imports: [
     CommonModule, 
     RouterOutlet, 
