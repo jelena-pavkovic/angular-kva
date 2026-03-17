@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Za ngModel
+import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,13 +24,11 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './login.css',
 })
 export class Login {
-  // Ove promenljive su nedostajale (Greška TS2339)
   email = '';
   password = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  // Ova funkcija je nedostajala (Greška TS2339)
   onLogin() {
     if (this.authService.login(this.email, this.password)) {
       this.router.navigate(['/']);
