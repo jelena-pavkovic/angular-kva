@@ -1,0 +1,73 @@
+<div class="wrapper">
+    @if (toy) {
+    <div class="details-card">
+        <div class="image-section">
+            <img [src]="'https://toy.pequla.com' + toy.imageUrl" [alt]="toy.name" class="toy-image">
+        </div>
+
+        <div class="content-section">
+            <div class="header-info">
+                <span class="category-tag">{{ toy.type.name }}</span>
+                <h1>{{ toy.name }}</h1>
+
+                @if (canReview) {
+                <div class="eligibility-badge">
+                    Možete oceniti ovu igračku jer je stigla na vašu adresu!
+                </div>
+                }
+            </div>
+
+            <p class="description">{{ toy.description }}</p>
+
+            @if (canReview) {
+            <div class="review-form">
+                <h3>Ocenite igračku</h3>
+                <mat-form-field>
+                    <mat-label>Vaš komentar</mat-label>
+                    <textarea matInput [(ngModel)]="newReview.comment"></textarea>
+                </mat-form-field>
+
+                <div class="rating-selector">
+                    <label>Ocena: </label>
+                    <select [(ngModel)]="newReview.rating">
+                        <option [value]="5">Odlično (5)</option>
+                        <option [value]="4">Vrlo dobro (4)</option>
+                        <option [value]="3">Dobro (3)</option>
+                        <option [value]="2">Dovoljno (2)</option>
+                        <option [value]="1">Nedovoljno (1)</option>
+                    </select>
+                </div>
+
+                <button mat-flat-button color="primary" (click)="submitRating()">POŠALJI OCENU</button>
+            </div>
+            }
+
+            <div class="action-footer">
+                <h2 class="price">{{ toy.price | currency:'RSD ' }}</h2>
+                <button mat-raised-button color="accent" (click)="reserve(toy)" class="reserve-btn">
+                    REZERVIŠI ODMAH
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="reviews-list">
+        <h3>Recenzije kupaca</h3>
+        @for (rev of reviews; track rev) {
+        <div class="review-item">
+            <strong>{{ rev.author }}</strong>
+            <span>Ocena: {{ rev.rating }}/5</span>
+            <p>{{ rev.comment }}</p>
+        </div>
+        } @empty {
+        <p>Još uvek nema recenzija za ovu igračku.</p>
+        }
+    </div>
+
+    } @else {
+    <div class="loading-state">
+        <mat-spinner *ngIf="false"></mat-spinner>
+        <p>Učitavanje podataka o igrački...</p>
+    </div>
+    }
+</div>
