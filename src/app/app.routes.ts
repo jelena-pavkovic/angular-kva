@@ -5,15 +5,14 @@ import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 import { Cart } from './components/cart/cart';
 import { UserProfile } from './components/user-profile/user-profile';
-import { About } from './components/about/about';
 import { authGuard } from './guards/auth-guard';
-import { A } from '@angular/cdk/keycodes';
+import { ToyDetails } from './components/toy-details/toy-details';
 
 export const routes: Routes = [
-    { path: '', component: Home }, // Početna sa igračkama
+    { path: '', component: Home },
     { path: 'login', component: Login },
-    { path: 'about', component: About },
     { path: 'register', component: Register },
+    { path: 'toy/:id', component: ToyDetails},
 
     { path: 'cart', component: Cart, canActivate: [authGuard] },
     { path: 'user', component: UserProfile, canActivate: [authGuard] },
