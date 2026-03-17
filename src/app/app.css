@@ -1,15 +1,52 @@
-.spacer { 
-    flex: 1 1 auto; 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body, html {
+    font-family: "Baloo 2", sans-serif;
+    font-optical-sizing: auto;
 }
 
-.wrapper { 
-    padding: 20px; max-width: 1200px; margin: 0 auto; 
+button, input, select, textarea, span {
+    font-family: "Baloo 2", sans-serif !important;
 }
 
-.auth-container { 
-    display: flex; justify-content: center; margin-top: 50px; 
+a {
+    font-family: "Baloo 2", sans-serif;
+    font-optical-sizing: auto;
 }
 
-mat-form-field { 
-    width: 100%; margin-bottom: 10px; 
+.logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: black;
+}
+
+mat-toolbar a[mat-button], 
+mat-toolbar button[mat-button] {
+    font-size: 17px;
+    margin: 0 5px;
+}
+
+mat-toolbar a[mat-button]:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.wrapper {
+    padding: 0 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 10px;
 }

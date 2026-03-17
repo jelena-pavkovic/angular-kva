@@ -1,10 +1,11 @@
 <mat-toolbar color="primary">
-    <span><strong>ToyStore KVA2026</strong></span>
+    <span><strong class="logo">ToyStore</strong></span>
     <span class="spacer"></span>
 
     <a routerLink="/" mat-button>Početna</a>
 
     @if(authService.getActiveUser()) {
+        <a routerLink="/user" mat-button>Nalog</a>
         <a routerLink="/cart" mat-button>
         <mat-icon>shopping_cart</mat-icon> Korpa
         </a>
