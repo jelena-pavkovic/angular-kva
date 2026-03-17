@@ -15,7 +15,9 @@ export class CartService {
     }
 
     addToCart(toy: Toy): void {
-        const existingItem = this.items.find(item => item.toy.toyId === toy.toyId);
+        const existingItem = this.items.find(item =>
+            item.toy.toyId === toy.toyId && item.status === 'rezervisano'
+        );
 
         if (existingItem) {
             existingItem.quantity += 1;
@@ -46,15 +48,17 @@ export class CartService {
     }
 
     calculateTotal(): number {
-        return this.items.reduce((acc, item) => acc + (item.toy.price * item.quantity), 0);
+        return this.items
+            .filter(item => item.status !== 'otkazano')
+            .reduce((acc, item) => acc + (item.toy.price * item.quantity), 0);
     }
 
     removeItem(index: number): void {
-        if (this.items[index].status === 'pristiglo') {
+        if (this.items[index].status === 'pristiglo' || this.items[index].status === 'otkazano') {
             this.items.splice(index, 1);
             this.cartSubject.next(this.items);
         } else {
-            alert('Možete brisati samo igračke koje su u statusu "pristiglo".');
+            alert('Ne mozete brisati igracke sa statusom "rezervisano"');
         }
     }
 

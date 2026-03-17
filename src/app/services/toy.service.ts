@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Toy, Review } from '../models/toy.model';
+import { of } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +33,7 @@ export class ToyService {
     }
 
     submitReview(toyId: number, review: Review): Observable<any> {
-        return this.http.post(`${this.baseUrl}/toy/${toyId}/reviews`, review);
-    }
+    console.log('Simulirano slanje recenzije:', review);
+    return of({ status: 'success' });
+}
 }
