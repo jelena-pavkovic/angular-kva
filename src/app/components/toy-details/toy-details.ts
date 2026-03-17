@@ -11,6 +11,8 @@ import { ToyService } from '../../services/toy.service';
 import { AuthService } from '../../services/auth.service';
 import { CartService } from '../../services/cart.service';
 import { Toy, Review } from '../../models/toy.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-toy-details',
@@ -30,6 +32,7 @@ export class ToyDetails {
   reviews: Review[] = [];
   canReview: boolean = false;
   newReview: Review = { author: '', comment: '', rating: 5 };
+  private snackBar = inject(MatSnackBar);
 
   constructor(
     private router: Router,
@@ -45,11 +48,16 @@ export class ToyDetails {
 
     if (idStr) {
       const id = Number(idStr);
+
+
+      const saved = localStorage.getItem(`reviews_${id}`);
+      this.reviews = saved ? JSON.parse(saved) : [];
       this.toyService.getToyById(id).subscribe({
         next: (data) => {
           this.toy = data;
-          this.reviews = (data as any).reviews || [];
-
+          if ((data as any).reviews) {
+            this.reviews = [...this.reviews, ...(data as any).reviews];
+          }
           this.checkEligibility(id);
           this.cdr.detectChanges();
         },
@@ -82,14 +90,33 @@ export class ToyDetails {
   }
 
   submitRating() {
-    if (this.toy) {
+    if (this.toy && this.toy.toyId) {
       const user = this.authService.getActiveUser();
       this.newReview.author = user ? user.username : 'Anonimni roditelj';
 
-      this.toyService.submitReview(this.toy.toyId, this.newReview).subscribe(() => {
-        this.reviews.push({ ...this.newReview });
-        this.canReview = false;
-        alert('Hvala na oceni!');
+      this.newReview.rating = Number(this.newReview.rating);
+
+      this.toyService.submitReview(this.toy.toyId, this.newReview).subscribe({
+        next: () => {
+          this.reviews.push({ ...this.newReview });
+
+          localStorage.setItem(`reviews_${this.toy?.toyId}`, JSON.stringify(this.reviews));
+
+          this.newReview = { author: '', comment: '', rating: 5 };
+          this.canReview = false;
+
+          this.snackBar.open('Hvala na oceni!', 'Zatvori', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'bottom',
+            panelClass: ['success-snackbar']
+          });
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error('Greška pri slanju recenzije:', err);
+          alert('Došlo je do greške pri čuvanju recenzije.');
+        }
       });
     }
   }
