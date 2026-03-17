@@ -11,25 +11,24 @@ export interface ToyType {
 }
 
 export interface Review {
-  author: string;   // Ime roditelja ili deteta [cite: 7]
-  comment: string;  // Tekst recenzije
-  rating: number;   // Ocena (1-5)
+  author: string;
+  comment: string;
+  rating: number;
 }
 
 export interface Toy {
-  toyId: number; // API koristi toyId umesto id [cite: 5]
+  toyId: number;
   name: string;
   permalink: string;
   description: string;
-  targetGroup: 'svi' | 'dečak' | 'devojčica'; // [cite: 7, 12]
-  productionDate: string; // 
+  targetGroup: 'svi' | 'dečak' | 'devojčica';
+  productionDate: string;
   price: number;
   imageUrl: string;
-  ageGroup: AgeGroup; // Objekat, ne string 
-  type: ToyType; // Objekat, ne string 
-  
-  // Polja potrebna za simulaciju pozadinske logike i korpe 
-  status?: 'rezervisano' | 'pristiglo' | 'otkazano'; 
-  userRating?: number; // Ocena (samo za status 'pristiglo') [cite: 12, 17]
-  reviews?: string[]; // Recenzije korisnika [cite: 7, 10, 16]
+  ageGroup: AgeGroup;
+  type: ToyType;
+
+  status?: 'rezervisano' | 'pristiglo' | 'otkazano';
+  userRating?: number;
+  reviews?: string[];
 }
