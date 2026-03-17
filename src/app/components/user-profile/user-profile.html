@@ -1,1 +1,73 @@
-<p>user-profile works!</p>
+<div class="profile-wrapper" *ngIf="user">
+    <mat-card class="profile-card">
+        <div class="profile-header">
+            <div class="avatar-circle">
+                {{ user.firstName[0] }}{{ user.lastName[0] }}
+            </div>
+            <mat-card-title>Moj Profil</mat-card-title>
+            <mat-card-subtitle>Informacije o korisničkom nalogu</mat-card-subtitle>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>person</mat-icon>
+                    <div matListItemTitle>Ime i prezime</div>
+                    <div matListItemLine *ngIf="!isEditing">{{user.firstName}} {{user.lastName}}</div>
+                    <div *ngIf="isEditing" class="edit-fields">
+                        <mat-form-field appearance="outline" compact>
+                            <input matInput [(ngModel)]="user.firstName" placeholder="Ime">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" compact>
+                            <input matInput [(ngModel)]="user.lastName" placeholder="Prezime">
+                        </mat-form-field>
+                    </div>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>email</mat-icon>
+                    <div matListItemTitle>Email adresa</div>
+                    <div matListItemLine *ngIf="!isEditing">{{user.email}}</div>
+                    <mat-form-field *ngIf="isEditing" class="edit-fields" appearance="outline">
+                        <input matInput [(ngModel)]="user.email">
+                    </mat-form-field>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>home</mat-icon>
+                    <div matListItemTitle>Adresa stanovanja</div>
+                    <div matListItemLine *ngIf="!isEditing">{{user.address}}</div>
+                    <mat-form-field *ngIf="isEditing" class="edit-fields" appearance="outline">
+                        <input matInput [(ngModel)]="user.address">
+                    </mat-form-field>
+                </mat-list-item>
+
+                <mat-list-item>
+                    <mat-icon matListItemIcon>phone</mat-icon>
+                    <div matListItemTitle>Broj telefona</div>
+                    <div matListItemLine *ngIf="!isEditing">{{user.phone}}</div>
+                    <mat-form-field *ngIf="isEditing" class="edit-fields" appearance="outline">
+                        <input matInput [(ngModel)]="user.phone">
+                    </mat-form-field>
+                </mat-list-item>
+            </mat-list>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button color="primary" *ngIf="!isEditing" (click)="onEditProfile()">
+                Izmeni podatke
+            </button>
+
+            <div *ngIf="isEditing">
+                <button mat-button (click)="onCancel()">
+                    Otkaži
+                </button>
+                <button mat-raised-button color="accent" (click)="onSave()">
+                    Sačuvaj
+                </button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>
