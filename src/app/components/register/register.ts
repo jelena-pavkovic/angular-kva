@@ -27,7 +27,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './register.css',
 })
 export class Register {
-    userData: User = {
+  userData: User = {
     firstName: '',
     lastName: '',
     email: '',
@@ -40,15 +40,19 @@ export class Register {
 
   availableTypes: string[] = ['Slagalica', 'Slikovnica', 'Figura', 'Automobil', 'Edukativna igra'];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
 
   onRegister() {
-  if (this.userData.email && this.userData.password && this.userData.username) {
+    const allFieldsFilled = Object.values(this.userData).every(value =>
+      Array.isArray(value) ? value.length > 0 : (value !== null && value !== '')
+    );
+
+    if (allFieldsFilled) {
       this.authService.register(this.userData);
       alert('Uspešna registracija!');
       this.router.navigate(['/']);
     } else {
-      alert('Molimo popunite sva obavezna polja.');
+      alert('Molimo popunite apsolutno sva polja.');
     }
   }
 }

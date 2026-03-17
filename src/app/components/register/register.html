@@ -29,22 +29,22 @@
                     <mat-label>Email adresa</mat-label>
                     <input matInput type="email" [(ngModel)]="userData.email" name="email" required>
                 </mat-form-field>
-
+                
                 <div class="form-row">
                     <mat-form-field appearance="outline">
                         <mat-label>Telefon</mat-label>
-                        <input matInput [(ngModel)]="userData.phone" name="phone">
+                        <input matInput [(ngModel)]="userData.phone" name="phone" required>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline">
                         <mat-label>Adresa</mat-label>
-                        <input matInput [(ngModel)]="userData.address" name="address">
+                        <input matInput [(ngModel)]="userData.address" name="address" required>
                     </mat-form-field>
                 </div>
 
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Omiljene vrste igračaka</mat-label>
-                    <mat-select [(ngModel)]="userData.favoriteToyTypes" name="favoriteToyTypes" multiple>
+                    <mat-select [(ngModel)]="userData.favoriteToyTypes" name="favoriteToyTypes" multiple required>
                         @for (type of availableTypes; track type) {
                         <mat-option [value]="type">{{type}}</mat-option>
                         }
