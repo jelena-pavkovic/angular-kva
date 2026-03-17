@@ -10,7 +10,7 @@ Ovaj projekat predstavlja računarski prototip korisničkog interfejsa za veb kl
 ## 📋 Funkcionalnosti
 Aplikacija je dizajnirana za jednog tipa korisnika – **kupca** – i omogućava sledeće:
 
-* **Pretraga i Katalog:** Pregled predefinisanog skupa od minimum 10 igračaka uz mogućnost filtriranja po nazivu, tipu, uzrastu, ciljnoj grupi, ceni i recenzijama.
+* **Pretraga i Katalog:** Pregled predefinisanog skupa od minimum 10 igračaka uz mogućnost filtriranja po nazivu, tipu, uzrastu, ciljnoj grupi i ceni.
 * **Sistem Rezervacija:** Dodavanje igračaka u "Korpu rezervacija" uz automatski obračun ukupne cene.
 * **Upravljanje Korpom:** 
     * Modifikacija podataka za igračke u statusu `rezervisano`.
