@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 
 
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -31,19 +32,36 @@ import { inject } from '@angular/core';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule],
+    MatButtonModule,
+    MatSelectModule],
   templateUrl: './user-profile.html',
   styleUrl: './user-profile.css'
 })
-export class UserProfile {
+export class UserProfile implements OnInit {
   user: User | null = null;
   isEditing: boolean = false;
+
+  isChangingPassword: boolean = false;
+  newPassword: string = '';
+  confirmPassword: string = '';
+
+  availableTypes: string[] = [
+    'Slagalica', 
+    'Slikovnica', 
+    'Figura', 
+    'Automobil', 
+    'Edukativna igra'
+  ];
 
   private snackBar = inject(MatSnackBar);
 
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    this.loadUserData();
+  }
+
+  loadUserData() {
     const activeUser = this.authService.getActiveUser();
     if (activeUser) {
       this.user = { ...activeUser };
@@ -56,22 +74,34 @@ export class UserProfile {
 
   onSave() {
     if (this.user) {
+      if (this.isChangingPassword) {
+        if (this.newPassword !== this.confirmPassword) {
+          this.snackBar.open('Lozinke se ne poklapaju!', 'Zatvori', { duration: 3000 });
+          return;
+        }
+        if (this.newPassword.length < 4) {
+          this.snackBar.open('Lozinka mora imati bar 4 karaktera!', 'Zatvori', { duration: 3000 });
+          return;
+        }
+        this.user.password = this.newPassword;
+      }
+
       this.authService.updateUser(this.user);
+      this.resetPasswordFields();
       this.isEditing = false;
-      this.snackBar.open('Podaci su uspešno ažurirani!', 'Zatvori', {
-        duration: 3000,
-        horizontalPosition: 'center',
-        verticalPosition: 'bottom',
-        panelClass: ['success-snackbar']
-      });
+      this.snackBar.open('Podaci su uspešno ažurirani!', 'Zatvori', { duration: 3000 });
     }
   }
 
   onCancel() {
-    const activeUser = this.authService.getActiveUser();
-    if (activeUser) {
-      this.user = { ...activeUser };
-    }
+    this.loadUserData();
+    this.resetPasswordFields();
     this.isEditing = false;
+  }
+
+  resetPasswordFields() {
+    this.isChangingPassword = false;
+    this.newPassword = '';
+    this.confirmPassword = '';
   }
 }

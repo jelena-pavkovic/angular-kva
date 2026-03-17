@@ -27,6 +27,44 @@
                 </mat-list-item>
 
                 <mat-list-item>
+                    <mat-icon matListItemIcon>account_circle</mat-icon>
+                    <div matListItemTitle>Korisničko ime</div>
+                    <div matListItemLine *ngIf="!isEditing">{{user.username}}</div>
+                    <mat-form-field *ngIf="isEditing" class="edit-fields" appearance="outline">
+                        <input matInput [(ngModel)]="user.username">
+                    </mat-form-field>
+                </mat-list-item>
+                
+                <mat-list-item>
+                    <mat-icon matListItemIcon>lock</mat-icon>
+                    <div matListItemTitle>Lozinka</div>
+                    <div matListItemLine *ngIf="!isEditing">********</div>
+
+                    <div *ngIf="isEditing" class="password-section">
+                        <button mat-button color="primary" *ngIf="!isChangingPassword"
+                            (click)="isChangingPassword = true">
+                            Promeni lozinku
+                        </button>
+
+                        <div *ngIf="isChangingPassword" class="edit-fields password-grid">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nova lozinka</mat-label>
+                                <input matInput type="password" [(ngModel)]="newPassword">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Potvrdi lozinku</mat-label>
+                                <input matInput type="password" [(ngModel)]="confirmPassword">
+                            </mat-form-field>
+
+                            <button mat-icon-button color="warn" (click)="resetPasswordFields()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-list-item>
+
+                <mat-list-item>
                     <mat-icon matListItemIcon>email</mat-icon>
                     <div matListItemTitle>Email adresa</div>
                     <div matListItemLine *ngIf="!isEditing">{{user.email}}</div>
@@ -51,6 +89,30 @@
                     <mat-form-field *ngIf="isEditing" class="edit-fields" appearance="outline">
                         <input matInput [(ngModel)]="user.phone">
                     </mat-form-field>
+                </mat-list-item>
+
+                <mat-list-item class="chips-item">
+                    <mat-icon matListItemIcon>favorite</mat-icon>
+                    <div matListItemTitle>Omiljene vrste igračaka</div>
+
+                    <div matListItemLine *ngIf="!isEditing">
+                        <mat-chip-set>
+                            @for (type of user.favoriteToyTypes; track type) {
+                            <mat-chip>{{type}}</mat-chip>
+                            }
+                        </mat-chip-set>
+                    </div>
+
+                    <div *ngIf="isEditing" class="edit-fields">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Izaberi tipove</mat-label>
+                            <mat-select [(ngModel)]="user.favoriteToyTypes" name="favoriteToyTypes" multiple>
+                                @for (type of availableTypes; track type) {
+                                <mat-option [value]="type">{{type}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </mat-list-item>
             </mat-list>
         </mat-card-content>
