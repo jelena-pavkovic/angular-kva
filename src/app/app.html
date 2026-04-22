@@ -5,16 +5,16 @@
     <a routerLink="/" mat-button>Početna</a>
 
     @if(authService.getActiveUser()) {
-        <a routerLink="/user" mat-button>Nalog</a>
-        <a routerLink="/cart" mat-button>
+    <a routerLink="/user" mat-button>Nalog</a>
+    <a routerLink="/cart" mat-button>
         <mat-icon>shopping_cart</mat-icon> Korpa
-        </a>
-        <button mat-button (click)="authService.doLogout()">Odjavi se</button>
+    </a>
+    <button mat-button (click)="authService.doLogout()">Odjavi se</button>
     } @else {
-        <a routerLink="/login" mat-button>Prijava</a>
-        <a routerLink="/register" mat-button>Registracija</a>
+    <a routerLink="/login" mat-button>Prijava</a>
+    <a routerLink="/register" mat-button>Registracija</a>
     }
 </mat-toolbar>
-    <div class="wrapper">
+<div class="wrapper">
     <router-outlet />
 </div>
